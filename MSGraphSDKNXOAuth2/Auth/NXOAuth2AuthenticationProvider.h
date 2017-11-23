@@ -21,7 +21,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "MSAuthenticationProvider.h"
+#import "MSGraphSDK/MSAuthenticationProvider.h"
 
 @interface NXOAuth2AuthenticationProvider : NSObject <MSAuthenticationProvider>
 
