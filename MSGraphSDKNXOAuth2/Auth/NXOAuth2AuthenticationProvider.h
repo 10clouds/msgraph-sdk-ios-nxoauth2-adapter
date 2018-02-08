@@ -57,10 +57,11 @@
 /**
  Obtains access token by performing login with UI, where viewController specifies the parent view controller.
  @param viewController The view controller to present the UI on.
+ @param email Email used as login_hint during sign in.
  @param completionHandler The completion handler to be called when the authentication has completed.
  error should be non nil if there was no error, and should contain any error(s) that occurred.
  */
-- (void) loginWithViewController:(UIViewController*)viewController completion:(void (^)(NSError *error))completionHandler;
+- (void) loginWithViewController:(UIViewController*)viewController email:(NSString*)email completion:(void (^)(NSError *error))completionHandler;
 
 /**
  Attempts to obtain the last used Account, returning YES for success and NO for failure.

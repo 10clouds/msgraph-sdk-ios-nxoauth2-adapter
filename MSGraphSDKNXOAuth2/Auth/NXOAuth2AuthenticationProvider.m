@@ -128,6 +128,7 @@ typedef void (^AuthCompletion)(NSError *error);
 }
 
 - (void)loginWithViewController:(UIViewController*)viewController
+                          email:(NSString*)email
                      completion:(void (^)(NSError *error))completionHandler
 {
     if (!viewController) {
@@ -144,6 +145,14 @@ typedef void (^AuthCompletion)(NSError *error);
                                       keyChainGroup:[tokenURL host]
                                           tokenType:self.tokenType
                                      forAccountType:@"MSGraph"];
+
+    NSDictionary *configuration = [[NXOAuth2AccountStore sharedStore] configurationForAccountType:@"MSGraph"];
+    NSMutableDictionary *newConfiguration = [[NSMutableDictionary alloc] initWithDictionary:configuration];
+    NSDictionary *additionalParameters = @{ @"login_hint": email };
+    [newConfiguration
+            setValue:additionalParameters
+              forKey:kNXOAuth2AccountStoreConfigurationAdditionalAuthenticationParameters];
+    [[NXOAuth2AccountStore sharedStore] setConfiguration:newConfiguration forAccountType:@"MSGraph"];
     
     [[NXOAuth2AccountStore sharedStore] requestAccessToAccountWithType:@"MSGraph" withPreparedAuthorizationURLHandler:^(NSURL *preparedURL)
     {
